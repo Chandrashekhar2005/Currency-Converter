@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>History</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📜 Conversion History</h1>
+
+{% if history %}
+
+{% for item in history %}
+
+<div class="result">
+
+<pre>{{ item }}</pre>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<h3>No History Found</h3>
+
+{% endif %}
+
+<button id="deleteHistory">
+
+🗑 Delete History
+
+</button>
+
+<br><br>
+
+<form action="/">
+    <button class="clear-btn1">
+    ⬅ Back
+
+    </button>
+</form>
+
+
+
+
+</div>
+
+<script>
+
+document.getElementById("deleteHistory").onclick=function(){
+
+fetch("/delete_history",{
+method:"POST"
+}).then(()=>location.reload());
+
+}
+
+</script>
+
+</body>
+
+</html>

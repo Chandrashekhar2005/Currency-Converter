@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Currency Converter</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script defer
+            src="{{ url_for('static', filename='script.js') }}">
+    </script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>💱 Live Currency Converter</h1>
+
+        <button id="themeToggle" class="theme-btn">
+            🌙 Dark Mode
+        </button>
+
+        <form method="POST">
+
+            <label>Base Currency</label>
+
+            <select name="base">
+                {% for code, name in currencies.items() %}
+                    <option value="{{ code }}">({{ code }}) {{ name }}</option>
+                {% endfor %}
+            </select>
+
+
+            <label>Target Currency</label>
+
+            <select name="target">
+                {% for code, name in currencies.items() %}
+                    <option value="{{ code }}">({{ code }}) {{ name }} </option>
+                {% endfor %}
+            </select>
+
+
+            <label>Amount</label>
+
+            <input
+                type="number"
+                name="amount"
+                placeholder="Enter Amount"
+                step="0.01"
+                required
+            >
+
+            <div class="buttons">
+
+                <button type="submit">
+                    Convert
+                </button>
+
+                <button type="button" id="clearResultBtn"
+                    class="clear-btn">
+                    Clear
+                </button>
+
+            </div>
+
+            <a href="/history">
+
+            <button
+            type="button"
+            style="width:100%;
+            margin-top:15px;
+            background:#6f42c1;
+            color:white;
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;">
+
+            📜 History
+
+            </button>
+
+            </a>
+
+        </form>
+
+
+        {% if data %}
+
+        <div class="result" id="resultSection">
+
+            <h2>Conversion Result</h2>
+
+            <p>
+
+                <strong>
+
+                    {{ data.amount }}
+
+                    {{ data.base }}
+
+                    =
+
+                    {{ "%.2f"|format(data.result) }}
+
+                    {{ data.target }}
+
+                </strong>
+
+            </p>
+
+            <p>
+
+                Exchange Rate:
+
+                1 {{ data.base }}
+
+                =
+
+                {{ "%.4f"|format(data.rate) }}
+
+                {{ data.target }}
+
+            </p>
+
+            
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
